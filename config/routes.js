@@ -13,6 +13,10 @@ module.exports = server => {
   server.get('/api/users', getUsers);
 };
 
+
+// hash password and save new username/password in database
+// once saved, invoke login so new registered user is automatically loggedin
+
 function register(req, res) {
   // implement user registration
   const newUser = {...req.body};
@@ -26,9 +30,12 @@ function register(req, res) {
 
 }
 
+
+// check user password
+// generate a token ans send it to client
+
 function login(req, res) {
   // implement user login
-  console.log('LOgin Server side req.body', req.body);
 
   const cred = req.body;
   db('users')
