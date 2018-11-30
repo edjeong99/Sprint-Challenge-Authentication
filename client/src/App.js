@@ -16,6 +16,7 @@ class App extends Component {
     this.state = {
       loggedIn: false,
       users: [],
+      jokes :[],
     };
   }
 
@@ -29,10 +30,11 @@ class App extends Component {
     };
   
     if (token) {
-      axios.get(`${url}/api/users`, options)
+      axios.get(`${url}/api/jokes`, options)
         .then((res) => {
           if (res.status === 200 && res.data) {
-            this.setState({ loggedIn: true, users: res.data });
+    
+            this.setState({ loggedIn: true, jokes: res.data });
           }
           else {
             throw new Error();
@@ -53,8 +55,8 @@ class App extends Component {
   
   componentDidUpdate(prevProps) {
     const { pathname } = this.props.location;
-    console.log(this.props);
-    console.log(prevProps);
+    // console.log(this.props);
+    // console.log(prevProps);
     if (pathname === '/' && pathname !== prevProps.location.pathname) {
       this.authenticate();
     }
@@ -68,6 +70,7 @@ class App extends Component {
           <NavLink to="/">Home </NavLink>
           <NavLink to="/login"> Login </NavLink>
           <NavLink to="/register"> Register </NavLink>
+         
           <NavLink to="/logout"> Logout </NavLink>
         </nav>
 
@@ -79,9 +82,14 @@ class App extends Component {
             <Route path="/" render={() => {
               return (
                 <React.Fragment>
-                <h2>Users</h2>
+                  
+                <h2>Jokes</h2>
                   <ol>
-                    {this.state.users.map(user => <li key={user.id}>{user.username}</li>)}
+                    {this.state.jokes.map((joke, i) => 
+                      <li key={i}>
+                        Setup : {joke.setup}<br></br>
+                        PunchLine : {joke.punchline}<br></br> <br></br> 
+                        </li>)}
                   </ol>
                 </React.Fragment>
               );
