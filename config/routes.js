@@ -15,20 +15,22 @@ module.exports = server => {
 
 function register(req, res) {
   // implement user registration
-  const newUser = req.body;
+  const newUser = {...req.body};
   newUser.password = bcrypt.hashSync(newUser.password, 3);
+
 
   db('users')
   .insert(newUser)
-  .then( id => res.status(200).json(id))
-  .catch(err => res.status(500).json({message:"could not register the user", err}))
+  .then( ()=> login(req, res))
+  .catch(() => res.status(500).json({message:"Register Failed!"}))  
 
 }
 
 function login(req, res) {
   // implement user login
-  const cred = req.body;
+  console.log('LOgin Server side req.body', req.body);
 
+  const cred = req.body;
   db('users')
   .where({username : cred.username})
   .first()
