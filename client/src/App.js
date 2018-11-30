@@ -4,6 +4,8 @@ import './App.css';
 import axios from 'axios'
 import Register from './components/Register';
 import Login from './components/Login';
+import Logout from './components/Logout';
+
 import { withRouter, Switch, Route, NavLink } from 'react-router-dom';
 
 const url = "http://localhost:9000";
@@ -63,15 +65,17 @@ class App extends Component {
     return (
       <div className="App">
              <nav>
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/login">Login</NavLink>
-          <NavLink to="/register">Register</NavLink>
+          <NavLink to="/">Home </NavLink>
+          <NavLink to="/login"> Login </NavLink>
+          <NavLink to="/register"> Register </NavLink>
+          <NavLink to="/logout"> Logout </NavLink>
         </nav>
 
        <section>
           <Switch>
             <Route path="/register" component={Register} />
            <Route path="/login" component={Login} />
+           <Route path="/logout" component={Logout} />
             <Route path="/" render={() => {
               return (
                 <React.Fragment>
